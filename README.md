@@ -22,7 +22,7 @@ Ex:
 "longitude": 17.7
 }
 
-----------------------------------------------------------------------------------------------------------------------------
+
 "Update survivor location"
 
 PUT http://localhost:3000/api/survivors#update
@@ -32,14 +32,14 @@ Ex:
 "latitude": 24.4,
 "longitude": 42.2
 }
-----------------------------------------------------------------------------------------------------------------------------
+
 "Flag survivor as abducted"
 Através de uma solicitação PUT (ex: "http://localhost:3000/api/survivors/1" ) é passado por "url" um parâmetro que representa a ID do Survivor que deseja reportar uma abdução, e por "body" é passado os parâmetros referente ao nome do Survivor que foi abduzido. Note que um Survivor não pode denunciar mais de uma vez a mesma pessoa abduzida. Para saber se um usuário foi abduzido, utilize a aba reports. A saída consta um indicador de sucesso e qual usuário que está reportando a abdução.
 Ex:
 {
 "name": "Rafael"
 }
-----------------------------------------------------------------------------------------------------------------------------
+
 "Reports"
 Foi feita uma criação de Hash para exibição das reports, contendo a lista de usuários, um indicador de abdução, porcentagem de abduzidos e n-abduzidos. Através de uma solicitação GET (ex: "http://localhost:3000/api/reports/all" ) é retornado a Hash com todos seus valores, não precisando de mensagem no "body".
 
