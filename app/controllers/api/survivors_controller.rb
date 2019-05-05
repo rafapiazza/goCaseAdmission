@@ -1,8 +1,9 @@
 module Api
 	class SurvivorsController < ApplicationController
 		def index
-			survivors = Survivor.order("created_at DESC");
-			render json: {status: 'SUCCESS', message:'Loaded survivors', data:survivors},status: :ok
+#created for tests
+#			survivors = Survivor.order("created_at DESC");
+#			render json: {status: 'SUCCESS', message:'Loaded survivors', data:survivors},status: :ok
 		end
 
 		def show
@@ -11,16 +12,23 @@ module Api
       	end
 
 		def create
-			survivor = Survivor.new(survivor_params)
-#trash code survivor.flag =['0','0','0']
-			survivor.flag1 =0;
-			survivor.flag2 =0;
-			survivor.flag3 =0;
+#verify if this name already exist
+			if Survivor.find_by(name: params[:name]) != nil
+				render json: {status: 'ERROR', message:'Name already cadastred', name:params[:name]},status: :ok
 
-			if(survivor.save)
-				render json: {status: 'SUCCESS', message:'Saved survivor', data:survivor},status: :ok
 			else
-				render json: {status: 'ERROR', message:'Cant save survivor', data:survivor.errors},status: :unprocessable_entity
+				
+				survivor = Survivor.new(survivor_params)
+#trash code survivor.flag =['0','0','0']
+				survivor.flag1 =0;
+				survivor.flag2 =0;
+				survivor.flag3 =0;
+
+				if(survivor.save)
+					render json: {status: 'SUCCESS', message:'Saved survivor', data:survivor},status: :ok
+				else
+					render json: {status: 'ERROR', message:'Cant save survivor', data:survivor.errors},status: :unprocessable_entity
+				end
 			end
 		end
 
@@ -28,7 +36,7 @@ module Api
 #to change location, need params "latitude" and "longitude" inside body
 			if(params[:latitude]!=nil&&params[:longitude]!=nil) 
 				survivor = Survivor.find(params[:id])
-#				survivor2 = Survivor.new(survivor_params)
+#trash code				survivor2 = Survivor.new(survivor_params)
 	
 				survivor.latitude = params[:latitude]
 				survivor.longitude = params[:longitude]
@@ -54,10 +62,11 @@ module Api
 		end
 
 		def destroy
-#			survivor = Survivor.find(params[:id])
+#created for tests
+			survivor = Survivor.find(params[:id])
 #			
 #			if(survivor.destroy)
-#        			render json: {status: 'SUCCESS', message:'deletado',data: survivor},status: :ok
+#      			render json: {status: 'SUCCESS', message:'deletado',data: survivor},status: :ok
 #				else
 #					render json: {status: 'ERROR', message:'Nao foi deletado', data: survivor},status: :unprocessable_entity
 #				end
